@@ -6,6 +6,8 @@ panel. Point it at any WebMCP-enabled site; it reads whatever tools that page ex
 nothing here is hard-coded to one site. Built as the consumer half of the
 [sirocco.gallery](https://sirocco.gallery) WebMCP reference implementation.
 
+See live demo here: [sirocco provider and consumer loop](https://youtu.be/BpHmZew93Ec)
+
 ## How it works
 
 ```
