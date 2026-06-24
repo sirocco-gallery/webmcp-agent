@@ -19,16 +19,16 @@ const MSG_PREFIX = 'webmcp-agent';
 // We feature-detect and use whichever is present, so the extension is flag-agnostic
 // and doesn't break if the user enabled one flag but not the other.
 function consumerContext() {
-  const candidates = [
-    typeof document !== 'undefined' ? document.modelContext : null,
-    typeof navigator !== 'undefined' ? navigator.modelContextTesting : null,
-    typeof navigator !== 'undefined' ? navigator.modelContext : null,
-  ];
-  for (const ctx of candidates) {
-    if (ctx && (typeof ctx.getTools === 'function' || typeof ctx.listTools === 'function')) {
-      return ctx;
-    }
-  }
+  const usable = (c) => c && (typeof c.getTools === 'function' || typeof c.listTools === 'function');
+  // Prefer the modern surfaces; only touch the deprecated navigator.modelContext as
+  // a last resort — merely *reading* that getter logs a deprecation warning, so we
+  // don't evaluate it when document.modelContext (or the testing variant) works.
+  const doc = typeof document !== 'undefined' ? document.modelContext : null;
+  if (usable(doc)) return doc;
+  const testing = typeof navigator !== 'undefined' ? navigator.modelContextTesting : null;
+  if (usable(testing)) return testing;
+  const navCtx = typeof navigator !== 'undefined' ? navigator.modelContext : null;
+  if (usable(navCtx)) return navCtx;
   return null;
 }
 
@@ -137,3 +137,4 @@ document.addEventListener('visibilitychange', () => {
 });
 
 discover();
+
