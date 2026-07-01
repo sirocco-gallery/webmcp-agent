@@ -40,21 +40,6 @@ page (MAIN world)        extension
   reconciles model-invented argument keys against each tool's schema (e.g. `css`→`code`),
   executes each tool on the page, and feeds the result back.
 
-## Install (unpacked)
-
-1. **Enable WebMCP in Chrome (146+).** Either flag works — the extension detects both:
-   - `chrome://flags/#enable-experimental-web-platform-features` → exposes the
-     production `document.modelContext` imperative API, **or**
-   - `chrome://flags/#enable-webmcp-testing` → exposes `navigator.modelContextTesting`.
-2. `chrome://extensions` → enable **Developer mode** → **Load unpacked** → pick this
-   `webmcp-agent/` folder.
-3. Click the toolbar icon to open the side panel. **Clicking the icon also scans the
-   current page** — it injects the WebMCP bridge into that tab only. After a full-page
-   navigation, click the icon again to re-scan (the per-tab access ends on navigation).
-   Paste a **Gemini API key** (stored locally via `chrome.storage`, never sent anywhere
-   but Google). Pick a model in the footer dropdown — **2.5 Pro** (default, reliable on
-   multi-argument / special-character calls) or **2.5 Flash** (faster). The **⧉** button
-   copies the full transcript (calls, args, results) for debugging.
 
 ## Try it (against sirocco.gallery)
 
@@ -66,12 +51,6 @@ Visit `https://sirocco.gallery/session`. The badge should show **5**. Then ask:
   instrument 002" → `check_design_drift`
 
 The agent chains calls on its own and summarizes the result.
-
-## Regenerate icons
-
-```bash
-python3 icons/make_icons.py
-```
 
 ## Constraints (v0.1)
 
